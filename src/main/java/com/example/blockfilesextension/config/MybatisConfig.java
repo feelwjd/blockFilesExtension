@@ -13,8 +13,14 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @MapperScan("com.example.blockfilesextension.mapper")
 public class MybatisConfig {
 
+    private final DataSource dataSource;
+
+    public MybatisConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource);
         sessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
@@ -22,7 +28,7 @@ public class MybatisConfig {
     }
 
     @Bean
-    public DataSourceTransactionManager transactionManager(DataSource dataSource) {
+    public DataSourceTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource);
     }
 }
