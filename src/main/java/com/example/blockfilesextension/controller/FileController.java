@@ -35,19 +35,16 @@ public class FileController {
             return new ResponseEntity<>("Please select a file!", HttpStatus.OK);
         }
 
-        // Check if extension is not allowed for upload
         String fileExtension = getFileExtension(file);
         List<ExtensionHistory> userExtensions = taskService.getHistoryBySession(session);
 
         for (ExtensionHistory ext : userExtensions) {
-            // If user has Extension on list, it means it is not allowed to be uploaded
             if (ext.getExtensionName().equals(fileExtension)) {
                 return new ResponseEntity<>("File extension not allowed!", HttpStatus.FORBIDDEN);
             }
         }
 
         try {
-            // Store the file
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
