@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.blockfilesextension.mapper.SessionMapper">
+
+    <insert id="saveSession" parameterType="java.util.Map">
+        INSERT INTO SESSION_MANAGE (session_id, create_date, expired_date)
+        VALUES (#{sessionId}, SYSDATE(), SYSDATE())
+    </insert>
+
+</mapper>

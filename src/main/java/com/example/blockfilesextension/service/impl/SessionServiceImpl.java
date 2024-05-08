@@ -1,8 +1,15 @@
 package com.example.blockfilesextension.service.impl;
 
-import jakarta.websocket.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.blockfilesextension.service.SessionService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Service;
 
-public class SessionServiceImpl {
+@Service
+public class SessionServiceImpl implements SessionService {
 
+    @Override
+    public String createSession(HttpSession session) {
+        // 세션 아이디를 반환
+        return session.getId();
+    }
 }
