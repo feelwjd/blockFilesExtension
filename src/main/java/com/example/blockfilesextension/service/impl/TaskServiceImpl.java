@@ -1,27 +1,58 @@
 package com.example.blockfilesextension.service.impl;
 
-import com.example.blockfilesextension.mapper.ExtensionMapper;
+import com.example.blockfilesextension.mapper.TaskMapper;
 import com.example.blockfilesextension.model.Extension;
+import com.example.blockfilesextension.model.ExtensionHistory;
 import com.example.blockfilesextension.service.TaskService;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {
+    private final TaskMapper taskMapper;
 
-    private final SqlSession sqlSession;
-
-    @Autowired
-    public TaskServiceImpl(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
+    public TaskServiceImpl(TaskMapper taskMapper) {
+        this.taskMapper = taskMapper;
     }
 
     @Override
-    public List<Extension> getAllExtensions(String sessionId) {
-        ExtensionMapper extensionMapper = sqlSession.getMapper(ExtensionMapper.class);
-        return extensionMapper.getAllExtensions(sessionId);
+    public List<Extension> getAllExtensions() {
+        return taskMapper.selectAllExtensions();
+    }
+
+    @Override
+    public void addExtension(HttpSession session, Extension extension) {
+        taskMapper.insertExtension(extension);
+    }
+
+    @Override
+    public void addExtensionHistory(HttpSession session, ExtensionHistory extensionHistory) {
+        String sessionId = session.getId();
+        extensionHistory.setSessionId(sessionId);
+        extensionHistory.setSelectCount(0);
+        taskMapper.insertExtensionHistory(extensionHistory);
+    }
+
+    @Override
+    public List<ExtensionHistory> getHistoryBySession(HttpSession session) {
+        return taskMapper.selectHistoryBySessionId(session.getId());
+    }
+
+    @Override
+    public void checkExtensionHistory(ExtensionHistory extensionHistory) {
+        extensionHistory.setChecked(extensionHistory.getChecked());
+        taskMapper.updateExtension(extensionHistory);
+    }
+
+    @Override
+    public void deleteExtensionHistory(ExtensionHistory extensionHistory) {
+        taskMapper.deleteExtension(extensionHistory);
+    }
+
+    @Override
+    public List<Extension> getTopExtensions() {
+        return taskMapper.selectTopExtensions();
     }
 }
