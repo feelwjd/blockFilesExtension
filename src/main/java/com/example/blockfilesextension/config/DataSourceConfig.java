@@ -27,9 +27,6 @@ public class DataSourceConfig {
     @Value("${spring.datasource.hikari.max-lifetime}")
     private int maxLifetime;
 
-    @Value("${spring.datasource.hikari.idle-timeout}")
-    private int idleTimeout;
-
     @Value("${spring.datasource.hikari.connection-timeout}")
     private int connectionTimeout;
 
@@ -45,7 +42,6 @@ public class DataSourceConfig {
         dataSource.setPassword(password);
         dataSource.setMaximumPoolSize(maximumPoolSize);
         dataSource.setMaxLifetime(maxLifetime);
-        dataSource.setIdleTimeout(idleTimeout);
         dataSource.setConnectionTimeout(connectionTimeout);
         dataSource.setPoolName(poolName);
         return dataSource;

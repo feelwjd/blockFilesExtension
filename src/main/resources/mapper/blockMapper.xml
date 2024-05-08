@@ -3,8 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.blockfilesextension">
+    <select id="selectExtensionMasterList" parameterType="java.util.HashMap" resultType="com.example.blockfilesextension.model.Extension">
+        SELECT
+            *
+        FROM
+            BLOCK_FILE_EXTENSION_MASTER
+    </select>
 
-    <insert id="">
-
-    </insert>
 </mapper>
