@@ -199,6 +199,7 @@ public class TaskController {
 
         try{
             ExtensionHistory extensionHistory = mapper.readValue(mapper.writeValueAsString(object), ExtensionHistory.class);
+            extensionHistory.setSessionId(sessionId);
             taskService.deleteExtensionHistory(extensionHistory);
 
             return new GenerateResponse<>(CodeEx.OK, true, "Success", body)

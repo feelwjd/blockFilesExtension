@@ -32,7 +32,7 @@ public interface TaskMapper {
             ") VALUES (" +
             "#{extensionIndex}" +
             ", #{sessionId}" +
-            ", 0" +
+            ", 1" +
             ", SYSDATE()" +
             ", SYSDATE()" +
             ")")
@@ -40,7 +40,8 @@ public interface TaskMapper {
 
     //세션 별 사용자 히스토리 조회
     @Select("SELECT " +
-            "HST.session_id         AS sessionId" +
+            "HST.history_index      AS historyIndex" +
+            ", HST.session_id       AS sessionId" +
             ", HST.extension_index  AS extensionIndex" +
             ", MST.extension_name   AS extensionName" +
             ", HST.check_yn         AS checked" +
