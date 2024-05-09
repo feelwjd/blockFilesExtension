@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface TaskService {
-    void addExtension(HttpSession session, Extension extension);
+    int addExtension(HttpSession session, Extension extension);
     void addExtensionHistory(HttpSession session, ExtensionHistory extensionHistory);
     void checkExtensionHistory(ExtensionHistory extensionHistory);
     void deleteExtensionHistory(ExtensionHistory extensionHistory);

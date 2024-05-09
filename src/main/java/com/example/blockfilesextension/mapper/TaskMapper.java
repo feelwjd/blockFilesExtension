@@ -2,10 +2,7 @@ package com.example.blockfilesextension.mapper;
 
 import com.example.blockfilesextension.model.Extension;
 import com.example.blockfilesextension.model.ExtensionHistory;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,7 +19,8 @@ public interface TaskMapper {
             ", SYSDATE()" +
             ") ON DUPLICATE KEY UPDATE " +
             "update_date = SYSDATE()")
-    void insertExtension(Extension extension);
+    @Options(useGeneratedKeys = true, keyProperty = "extensionIndex")
+    int insertExtension(Extension extension);
 
     //확장자 히스토리 생성
     @Insert("INSERT INTO BLOCK_FILE_EXTENSION_HISTORY (" +
@@ -34,7 +32,7 @@ public interface TaskMapper {
             ") VALUES (" +
             "#{extensionIndex}" +
             ", #{sessionId}" +
-            ", #{selectCount}" +
+            ", 0" +
             ", SYSDATE()" +
             ", SYSDATE()" +
             ")")

@@ -23,8 +23,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addExtension(HttpSession session, Extension extension) {
-        taskMapper.insertExtension(extension);
+    public int addExtension(HttpSession session, Extension extension) {
+        return taskMapper.insertExtension(extension);
     }
 
     @Override

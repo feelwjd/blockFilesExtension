@@ -40,10 +40,11 @@ public class TaskController {
         logger.debug("Session ID: {}", sessionId);
 
         ObjectMapper            mapper      = new ObjectMapper();;
-        ResponseBody<String>    body        = new ResponseBody<>();
+        ResponseBody<Integer>   body        = new ResponseBody<>();
         try{
             Extension extension = mapper.readValue(mapper.writeValueAsString(object), Extension.class);
             taskService.addExtension(session, extension);
+            body.setData(extension.getExtensionIndex());
 
             return new GenerateResponse<>(CodeEx.OK, true, "Success", body)
                     .generateResponse();
