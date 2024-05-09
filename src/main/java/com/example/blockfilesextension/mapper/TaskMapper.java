@@ -90,5 +90,5 @@ public interface TaskMapper {
             "WHERE HST.extension_index = #{extensionId} " +
             "ORDER BY HST.select_count DESC " +
             "LIMIT 7")
-    List<Extension> selectTopExtensions();
+    List<ExtensionHistory> selectTopExtensions();
 }

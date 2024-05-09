@@ -15,5 +15,5 @@ public interface TaskService {
     void deleteExtensionHistory(ExtensionHistory extensionHistory);
     List<ExtensionHistory> getHistoryBySession(HttpSession session);
     List<Extension> getAllExtensions();
-    List<Extension> getTopExtensions();
+    List<ExtensionHistory> getTopExtensions();
 }

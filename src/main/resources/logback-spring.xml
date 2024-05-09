@@ -4,11 +4,27 @@
             <pattern>%p %d [%t] [%c] %-15.15M %m%n</pattern>
         </encoder>
     </appender>
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG"/>
+
+    <!-- Rolling File Appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 로그 파일 이름 설정 -->
+        <file>./log/app.log</file>
+        <!-- 롤링 정책 설정 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./log/%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%p %d [%t] [%c] %-15.15M %m%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- HikariCP 로깅 설정 -->
     <logger name="com.zaxxer.hikari.pool.PoolBase" level="INFO"/>
     <logger name="com.zaxxer.hikari.pool.HikariPool" level="INFO"/>
     <logger name="com.zaxxer.hikari.HikariDataSource" level="INFO"/>
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>

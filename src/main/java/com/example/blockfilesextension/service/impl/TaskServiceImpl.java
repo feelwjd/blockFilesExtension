@@ -52,7 +52,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Extension> getTopExtensions() {
+    public List<ExtensionHistory> getTopExtensions() {
         return taskMapper.selectTopExtensions();
     }
 }
