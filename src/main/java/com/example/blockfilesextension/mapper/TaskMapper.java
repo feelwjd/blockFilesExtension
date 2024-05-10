@@ -23,7 +23,7 @@ public interface TaskMapper {
     int insertExtension(Extension extension);
 
     //확장자 히스토리 생성
-    @Insert("INSERT INTO BLOCK_FILE_EXTENSION_HISTORY (" +
+    @Update("INSERT INTO BLOCK_FILE_EXTENSION_HISTORY (" +
             "extension_index" +
             ", session_id" +
             ", select_count" +
@@ -35,7 +35,10 @@ public interface TaskMapper {
             ", 1" +
             ", SYSDATE()" +
             ", SYSDATE()" +
-            ")")
+            ") ON DUPLICATE KEY UPDATE " +
+            "del_yn = 'N'" +
+            ", update_date = SYSDATE()" +
+            ", select_count = select_count + 1")
     void insertExtensionHistory(ExtensionHistory extensionHistory);
 
     //세션 별 사용자 히스토리 조회
@@ -50,18 +53,23 @@ public interface TaskMapper {
             ", HST.update_date      AS updateDate " +
             "FROM BLOCK_EXTENSION.BLOCK_FILE_EXTENSION_HISTORY      HST " +
             "INNER JOIN BLOCK_EXTENSION.BLOCK_FILE_EXTENSION_MASTER MST ON MST.extension_index = HST.extension_index " +
-            "WHERE session_id = #{sessionId}")
+            "WHERE session_id = #{sessionId} " +
+            "AND del_yn = 'N' " +
+            "AND HST.select_count < 5 ")
     List<ExtensionHistory> selectHistoryBySessionId(String sessionId);
 
     //세션 별 사용자 확장자 히스토리 업데이트
     @Update("UPDATE BLOCK_FILE_EXTENSION_HISTORY " +
             "SET " +
             "check_yn = #{checked} " +
-            "WHERE session_id = #{sessionId}")
+            "WHERE session_id = #{sessionId} " +
+            "AND extension_index = #{extensionIndex}")
     void updateExtension(ExtensionHistory extension);
 
     //세션 별 사용자 확장자 히스토리 삭제
-    @Update("DELETE FROM BLOCK_FILE_EXTENSION_HISTORY " +
+    @Update("UPDATE BLOCK_FILE_EXTENSION_HISTORY " +
+            "SET " +
+            "del_yn = 'Y' " +
             "WHERE session_id = #{sessionId} " +
             "AND extension_index = #{extensionIndex}")
     void deleteExtension(ExtensionHistory extension);
@@ -86,8 +94,10 @@ public interface TaskMapper {
             ", HST.update_date      AS updateDate " +
             "FROM BLOCK_FILE_EXTENSION_HISTORY      HST " +
             "INNER JOIN BLOCK_FILE_EXTENSION_MASTER MST ON MST.extension_index = HST.extension_index " +
-            "WHERE HST.extension_index = #{extensionId} " +
+            "WHERE HST.session_id = #{sessionId} " +
+            "AND HST.select_count >= 5 " +
+            "AND HST.del_yn = 'N' " +
             "ORDER BY HST.select_count DESC " +
             "LIMIT 7")
-    List<ExtensionHistory> selectTopExtensions();
+    List<ExtensionHistory> selectTopExtensions(String sessionId);
 }

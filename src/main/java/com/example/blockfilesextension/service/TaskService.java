@@ -11,9 +11,9 @@ import java.util.List;
 public interface TaskService {
     int addExtension(HttpSession session, Extension extension);
     void addExtensionHistory(HttpSession session, ExtensionHistory extensionHistory);
-    void checkExtensionHistory(ExtensionHistory extensionHistory);
+    void checkExtensionHistory(HttpSession session, ExtensionHistory extensionHistory);
     void deleteExtensionHistory(ExtensionHistory extensionHistory);
     List<ExtensionHistory> getHistoryBySession(HttpSession session);
     List<Extension> getAllExtensions();
-    List<ExtensionHistory> getTopExtensions();
+    List<ExtensionHistory> getTopExtensions(HttpSession session);
 }

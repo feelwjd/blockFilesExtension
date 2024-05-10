@@ -167,7 +167,7 @@ public class TaskController {
 
         try{
             ExtensionHistory extensionHistory = mapper.readValue(mapper.writeValueAsString(object), ExtensionHistory.class);
-            taskService.checkExtensionHistory(extensionHistory);
+            taskService.checkExtensionHistory(session, extensionHistory);
 
             return new GenerateResponse<>(CodeEx.OK, true, "Success", body)
                     .generateResponse();
@@ -230,7 +230,7 @@ public class TaskController {
         ResponseBody<List<ExtensionHistory>>    body        = new ResponseBody<>();
 
         try{
-            body.setData(taskService.getTopExtensions());
+            body.setData(taskService.getTopExtensions(session));
 
             return new GenerateResponse<>(CodeEx.OK, true, "Success", body)
                     .generateResponse();

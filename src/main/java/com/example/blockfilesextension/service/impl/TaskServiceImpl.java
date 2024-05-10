@@ -41,8 +41,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void checkExtensionHistory(ExtensionHistory extensionHistory) {
+    public void checkExtensionHistory(HttpSession session, ExtensionHistory extensionHistory) {
         extensionHistory.setChecked(extensionHistory.getChecked());
+        extensionHistory.setSessionId(session.getId());
         taskMapper.updateExtension(extensionHistory);
     }
 
@@ -52,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<ExtensionHistory> getTopExtensions() {
-        return taskMapper.selectTopExtensions();
+    public List<ExtensionHistory> getTopExtensions(HttpSession session) {
+        return taskMapper.selectTopExtensions(session.getId());
     }
 }
