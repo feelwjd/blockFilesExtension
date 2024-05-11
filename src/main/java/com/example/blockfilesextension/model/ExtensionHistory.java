@@ -13,7 +13,8 @@ public class ExtensionHistory {
     private String extensionIndex;
     private String extensionName;
     private String checked;
-    private Integer selectCount;
+    private String delYn;
+    private int select_count;
     private String createDate;
     private String updateDate;
 
@@ -25,9 +26,10 @@ public class ExtensionHistory {
                 ", extensionIndex='" + extensionIndex + '\'' +
                 ", extensionName='" + extensionName + '\'' +
                 ", checked='" + checked + '\'' +
-                ", checked='" + checked + '\'' +
+                ", select_count=" + select_count +
                 ", createDate='" + createDate + '\'' +
                 ", updateDate='" + updateDate + '\'' +
+                ", delYn='" + delYn + '\'' +
                 '}';
     }
 }

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class Extension {
     private int extensionIndex;
     private String extensionName;
+    private int selectCount;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
@@ -19,6 +20,7 @@ public class Extension {
         return "Extension{" +
                 "extensionIndex=" + extensionIndex +
                 ", extensionName='" + extensionName + '\'' +
+                ", selectCount=" + selectCount +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 '}';

@@ -136,11 +136,12 @@ public class FileController {
 
             Tika tika = new Tika();
             String detectedType = tika.detect(file.getBytes());
+            String originalFilename = file.getOriginalFilename();
 
             // 파일 위변조 체크 Mapping
             extension = switch (detectedType) {
                 case "application/pdf" -> ".pdf";
-                case "image/jpeg" -> ".jpg";
+                case "image/jpeg" -> originalFilename.endsWith(".jpeg") ? ".jpeg" : ".jpg";
                 case "image/png" -> ".png";
                 case "image/gif" -> ".gif";
                 case "text/plain" -> ".txt";
@@ -176,7 +177,6 @@ public class FileController {
                 default -> "";
             };
 
-            String originalFilename = file.getOriginalFilename();
             if(originalFilename == null || originalFilename.lastIndexOf('.') == -1) {
                 return false;
             }

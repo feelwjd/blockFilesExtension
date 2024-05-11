@@ -31,7 +31,6 @@ public class TaskServiceImpl implements TaskService {
     public void addExtensionHistory(HttpSession session, ExtensionHistory extensionHistory) {
         String sessionId = session.getId();
         extensionHistory.setSessionId(sessionId);
-        extensionHistory.setSelectCount(0);
         taskMapper.insertExtensionHistory(extensionHistory);
     }
 
@@ -45,6 +44,7 @@ public class TaskServiceImpl implements TaskService {
         extensionHistory.setChecked(extensionHistory.getChecked());
         extensionHistory.setSessionId(session.getId());
         taskMapper.updateExtension(extensionHistory);
+        taskMapper.updateSelectedExtension(extensionHistory);
     }
 
     @Override
