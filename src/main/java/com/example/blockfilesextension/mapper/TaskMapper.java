@@ -91,9 +91,13 @@ public interface TaskMapper {
             "MST.extension_index    AS extensionIndex " +
             ", MST.extension_name   AS extensionName " +
             ", MST.select_count     AS selectCount " +
-            ", IF(HST.session_id = #{sessionId}, HST.check_yn, NULL) AS checked " +
+            ", HST.check_yn         AS checked " +
             "FROM BLOCK_FILE_EXTENSION_MASTER MST " +
-            "LEFT JOIN BLOCK_FILE_EXTENSION_HISTORY HST ON HST.extension_index = MST.extension_index " +
+            "LEFT JOIN (" +
+            "SELECT * " +
+            "FROM BLOCK_FILE_EXTENSION_HISTORY " +
+            "WHERE session_id = #{sessionId} " +
+            ") HST ON HST.extension_index = MST.extension_index " +
             "ORDER BY MST.select_count desc " +
             "LIMIT 5 ")
     List<ExtensionHistory> selectTopExtensions(String sessionId);

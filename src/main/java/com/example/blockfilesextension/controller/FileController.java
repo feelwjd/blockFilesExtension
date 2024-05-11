@@ -58,13 +58,13 @@ public class FileController {
         try{
             if (file.isEmpty()) {
                 logger.error("Please select a file!");
-                return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "Please select a file! :{" + CodeEx.FILE_NOT_FOUND + "}", null)
+                return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "파일을 선택해주세요. 오류:{" + CodeEx.FILE_NOT_FOUND + "}", null)
                         .generateResponse();
             }
 
             if (!validateFileType(file)) {
                 logger.error("Invalid file type!");
-                return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "Invalid file type! :{" + CodeEx.FILE_UPLOAD_FORMAT_NOT_SUPPORTED + "}", null)
+                return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "잘못된 파일 확장자 입니다. 오류:{" + CodeEx.FILE_UPLOAD_FORMAT_NOT_SUPPORTED + "}", null)
                         .generateResponse();
             }
 
@@ -74,7 +74,7 @@ public class FileController {
             for (ExtensionHistory ext : userExtensions) {
                 if (ext.getExtensionName().equals(fileExtension)) {
                     logger.error("File extension not allowed!");
-                    return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "File extension not allowed! :{" + CodeEx.FILE_UPLOAD_FORMAT_NOT_SUPPORTED + "}", null)
+                    return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "파일 확장자가 허용되지 않습니다. 오류:{" + CodeEx.FILE_UPLOAD_FORMAT_NOT_SUPPORTED + "}", null)
                             .generateResponse();
                 }
             }
@@ -90,14 +90,14 @@ public class FileController {
 
             } catch (FileNotFoundException e) {
                 logger.error("Error occurred while upload file: {}", e.getMessage());
-                return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "Error occurred while upload file: :{" + CodeEx.FILE_UPLOAD_PARTIAL_ERROR + "}", null)
+                return new GenerateResponse<>(CodeEx.BAD_REQUEST, false, "파일을 찾을 수 없습니다. : 오류:{" + CodeEx.FILE_UPLOAD_PARTIAL_ERROR + "}", null)
                         .generateResponse();
             }
             body.setData("File uploaded successfully!");
             return new GenerateResponse<>(200, true, "Success", body)
                     .generateResponse();
         } catch (Exception e) {
-            return new GenerateResponse<>(500, false, "Error occurred while upload file: :{" + CodeEx.FILE_UPLOAD_FORMAT_NOT_SUPPORTED + "}", null)
+            return new GenerateResponse<>(500, false, "파일 업로드는 최대 200MB 까지 가능합니다. 오류:{" + CodeEx.FILE_UPLOAD_FORMAT_NOT_SUPPORTED + "}", null)
                     .generateResponse();
         } finally {
             logger.debug("End::onProcess()");
