@@ -80,10 +80,11 @@ public interface TaskMapper {
 
     //서버 전체 등록된 확장자 리스트 조회
     @Select("SELECT DISTINCT " +
-            "HST.extension_index    AS extensionIndex" +
-            ", MST.extension_name   AS extensionName " +
-            "FROM BLOCK_FILE_EXTENSION_HISTORY      HST " +
-            "INNER JOIN BLOCK_FILE_EXTENSION_MASTER MST on HST.extension_index = MST.extension_index")
+            "extension_index    AS extensionIndex" +
+            ", extension_name   AS extensionName " +
+            ", select_count     AS selectCount " +
+            "FROM BLOCK_FILE_EXTENSION_MASTER " +
+            "ORDER BY select_count DESC ")
     List<Extension> selectAllExtensions();
 
     //고정 확장자 조회
