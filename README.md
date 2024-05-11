@@ -1,7 +1,7 @@
 # 서버 구성
-## 서버 : Spring Boot
-## DataBase : Mysql | AWS RDS
-## 인스턴스 : AWS EC2
+서버 : Spring Boot
+DataBase : Mysql | AWS RDS
+인스턴스 : AWS EC2
 
 # API 요약
 ## Endpoints
