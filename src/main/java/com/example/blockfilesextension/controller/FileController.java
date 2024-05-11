@@ -94,7 +94,7 @@ public class FileController {
                         .generateResponse();
             }
             body.setData("File uploaded successfully!");
-            return new GenerateResponse<>(200, true, "Success", body)
+            return new GenerateResponse<>(200, true, "파일 첨부가 완료되었습니다.", body)
                     .generateResponse();
         } catch (Exception e) {
             return new GenerateResponse<>(500, false, "파일 업로드는 최대 200MB 까지 가능합니다. 오류:{" + CodeEx.FILE_UPLOAD_FORMAT_NOT_SUPPORTED + "}", null)
